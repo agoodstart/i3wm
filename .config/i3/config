@@ -1,0 +1,150 @@
+#
+## Variables
+#
+
+set $m Mod4
+set $ma Mod1
+
+set $term --no-startup-id alacritty
+set $menu --no-startup-id rofi -show "drun" -theme ~/.config/rofi/theme.rasi
+
+# set $menu --no-startup-id rofi -show "drun" -theme ~/.config/rofi/theme.rasi
+
+set $l Left
+set $r Right
+set $u Up
+set $d Down
+set $c Control
+set $s Shift
+set $a Alt
+
+set $1 workspace 1
+set $2 workspace 2
+set $3 workspace 3
+set $4 workspace 4
+set $5 workspace 4
+
+set $fl focus left
+set $fr focus right
+set $fu focus up
+set $fd focus down
+
+set $ml move left
+set $mr move right
+set $mu move up
+set $md move down
+
+set $red #BF616A
+set $green #A3Be8C
+set $purple #B48EAD
+set $aqua #88C0D0
+
+set $mw move container to workspace
+
+#
+## Set fonts
+#
+
+# font pango:Terminus 15px
+font pango:monospace 8
+
+#
+## Configuration
+#
+
+# Remove title bars
+default_border pixel 3
+
+# border gaps
+
+gaps top 35
+gaps bottom 35
+gaps outer 10
+gaps inner 10
+
+#Float alacritty windows
+for_window [class="Alacritty"] floating enable
+for_window [class="Code"] floating enable
+for_window [class="^.*"] border pixel 0
+
+# Set a floating modifier
+floating_modifier $m
+
+# Colors	Border	BG	Text	Indicator Ch. border
+client.focused	$green	$aqua	$aqua	$green	  $green
+client.urgent	$red	$aqua	$red	$red	  $red
+
+# exec_always --no-startup-id nitrogen --set-auto 
+
+#
+## Keybinds
+#
+
+# Workspaces
+# winkey+number 
+bindsym $m+1 $1
+bindsym $m+2 $2
+bindsym $m+3 $3
+bindsym $m+4 $4
+bindsym $m+5 $5
+
+# Movement
+# winkey + focus direction
+bindsym $m+$l $fl
+bindsym $m+$r $fr
+bindsym $m+$u $fu
+bindsym $m+$d $fd
+
+# winkey + move direction
+bindsym $m+$s+$l $ml
+bindsym $m+$s+$r $mr
+bindsym $m+$s+$u $mu
+bindsym $m+$s+$d $md
+
+# move container to different workspace
+bindsym $m+$s+1 $mw 1
+bindsym $m+$s+2 $mw 2
+bindsym $m+$s+3 $mw 3
+bindsym $m+$s+4 $mw 4
+bindsym $m+$s+5 $mw 5
+
+# Layouts
+bindsym $m+$s+x layout toggle split tabbed stacking
+bindsym $m+f fullscreen toggle
+
+#floating windows
+bindsym $m+$c+s sticky toggle
+bindsym $m+$c+f floating toggle
+
+#
+## Hotkeys
+#
+
+bindsym $m+$s+r restart
+bindsym $m+q kill
+bindsym $m+c reload
+bindsym $m+t exec $term
+bindsym $m+d exec $menu
+
+# Resize 
+mode "resize" {
+	
+	bindsym $u resize shrink height 10px
+	bindsym $l resize shrink width 10px
+	bindsym $r resize grow width 10px
+	bindsym $d resize grow height 10px
+
+	bindsym Return mode "default"
+	bindsym Escape mode "default"
+}
+
+bindsym $m+r mode "resize"
+
+bindsym $m+$a+w exec --no-startup-id firefox
+
+#
+## Execs
+#
+exec_always --no-startup-id feh --bg-fill $HOME/Pictures/Wallpapers/sunset-forest.jpg
+exec_always --no-startup-id picom
+exec_always --no-startup-id $HOME/.config/polybar/launch.sh
